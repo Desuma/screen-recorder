@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "outDir": "tsc",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "src/*"
+      ]
+    },
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": true,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "strict": true
+  },
+  "include": [
+    "src",
+    "public",
+  ],
+  "exclude": [
+    "node_modules",
+    "config",
+    "tsc",
+    "log",
+    "config",
+  ],
+  "globals": {
+    "chrome": "writable"
+  }
+}
