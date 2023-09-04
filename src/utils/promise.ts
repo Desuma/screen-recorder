@@ -38,20 +38,18 @@ export class Defer<T = void> {
   reject!: (reason?: any) => void;
 
   constructor(ms?: number) {
-    const _self = this;
-
-    _self.promise = new Promise<T>((reslove, reject) => {
-      _self.reslove = (...args) => {
-        safeDone(_self as unknown as Defer, reslove, args, _self.timer);
+    this.promise = new Promise<T>((reslove, reject) => {
+      this.reslove = (...args) => {
+        safeDone(this as unknown as Defer, reslove, args, this.timer);
       };
-      _self.reject = (...args) => {
-        safeDone(_self as unknown as Defer, reject, args, _self.timer);
+      this.reject = (...args) => {
+        safeDone(this as unknown as Defer, reject, args, this.timer);
       };;
     });
 
     if (ms && isFinite(ms)) {
-      _self.timer = setTimeout(() => {
-        safeDone(_self as unknown as Defer, _self.reject, [], _self.timer);
+      this.timer = setTimeout(() => {
+        safeDone(this as unknown as Defer, this.reject, [], this.timer);
       }, ms);
     }
   }
@@ -61,21 +59,16 @@ export const createDefer = <T = any>(ms?: number) => new Defer<T>(ms);
 
 /**
  * @param { Promise } promise
- * @param { Object= } errorExt - Additional Information you can pass to the err object
  * @return { Promise }
  */
-export const awaitTo = <T, U = Error>(
+export const to = async <U = Error, T = any>(
   promise: Promise<T>,
-  errorExt?: object
 ): Promise<[U, undefined] | [null, T]> => {
-  return promise
-    .then<[null, T]>((data: T) => [null, data])
-    .catch<[U, undefined]>((err: U) => {
-      if (errorExt) {
-        const parsedError = Object.assign({}, err, errorExt);
-        return [parsedError, undefined];
-      }
-
-      return [err, undefined];
-    });
+  try {
+    const data = await promise;
+    const result: [null, T] = [null, data];
+    return result;
+  } catch (err) {
+    return [err as U, undefined];
+  }
 }

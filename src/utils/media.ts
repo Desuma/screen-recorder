@@ -1,9 +1,9 @@
-import { awaitTo } from "./promise";
+import { to } from './promise';
 
-export const getDisplayMedia = () => awaitTo(
-  navigator
-    .mediaDevices
-    .getDisplayMedia({
+export const getDisplayMedia = async () => {
+  const defer = navigator
+    ?.mediaDevices
+    ?.getDisplayMedia?.({
       audio: false,
       video: {
         autoGainControl: false,
@@ -12,5 +12,7 @@ export const getDisplayMedia = () => awaitTo(
         //   autoGainControl: false,
         // }]
       }
-    })
-);
+    });
+
+  return await to(defer);
+};
