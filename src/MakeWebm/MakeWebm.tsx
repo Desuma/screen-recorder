@@ -1,14 +1,10 @@
 import React from 'react';
 import { FloatButton } from 'antd';
-import {
-  MinusCircleOutlined,
-  PauseCircleOutlined,
-  PlayCircleOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
 import { isEmpty } from 'lodash';
 
 import { useRecorder } from '~/hooks';
+
+import { PauseRecordBtn, ResumeRecordBtn, StartRecordBtn, StopRecordBtn } from './components';
 
 export const MakeWebm: React.FC = () => {
   const {
@@ -25,38 +21,25 @@ export const MakeWebm: React.FC = () => {
       type={'default'}
       style={{ right: 24, bottom: 500 }}
     >
-      {
-        isEmpty(state) || state === 'inactive' ? (
-          <FloatButton
-            icon={<VideoCameraOutlined />}
-            onClick={onStartRecord}
-          />
-        ) : (
-          <FloatButton
-            icon={<MinusCircleOutlined />}
-            onClick={onStopRecord}
-          />
-        )
-      }
-      {
-        state === 'recording' && (
-          <FloatButton
-            icon={<PauseCircleOutlined />}
-            onClick={onPauseRecord}
-          />
-        )
-      }
-      {
-        state === 'paused' && (
-          <FloatButton
-            icon={<PlayCircleOutlined />}
-            onClick={onResumeRecord}
-          />
-        )
-      }
+      <StartRecordBtn
+        display={isEmpty(state) || state === 'inactive'}
+        onClick={onStartRecord}
+      />
+      <StopRecordBtn
+        display={!isEmpty(state) && state !== 'inactive'}
+        onClick={onStopRecord}
+      />
+      <PauseRecordBtn
+        display={state === 'recording'}
+        onClick={onPauseRecord}
+      />
+      <ResumeRecordBtn
+        display={state === 'paused'}
+        onClick={onResumeRecord}
+      />
     </FloatButton.Group>
 
   );
-}
+};
 
 export default MakeWebm;

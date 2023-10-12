@@ -8,6 +8,7 @@
     "start": "set MODE=development && webpack server --open --config ./config/webpack.dev.js",
     "watch": "set MODE=development && webpack --watch --config ./config/webpack.dev.js",
     "build": "set MODE=production && webpack --config ./config/webpack.prod.js",
+    "build:dev": "set MODE=development && webpack --config ./config/webpack.dev.js",
     "lint": "npm run lint:es && npm run lint:types",
     "lint:es": "npx eslint --ext js,jsx,ts,tsx src",
     "lint:types": "npx tsc --noEmit"
@@ -55,6 +56,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.10",
+    "react-router-dom": "^6.16.0",
     "typescript": "^5.1.6"
   }
 }

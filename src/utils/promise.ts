@@ -44,7 +44,7 @@ export class Defer<T = void> {
       };
       this.reject = (...args) => {
         safeDone(this as unknown as Defer, reject, args, this.timer);
-      };;
+      };
     });
 
     if (ms && isFinite(ms)) {
